@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscriber Form</title>
+</head>
+<body>
+<h1>Subscriber Form</h1>
+<form id="subscriberForm">
+
+    <label for="subscName">First Name:</label><br>
+    <input type="text" id="subscName" name="subscName" required><br><br>
+
+    <label for="subscSurname">Last Name:</label><br>
+    <input type="text" id="subscSurname" name="subscSurname" required><br><br>
+
+    <label for="msisdn">MSISDN:</label><br>
+    <input type="text" id="msisdn" name="msisdn" required><br><br>
+
+    <label for="tariffId">Tariff ID:</label><br>
+    <input type="number" id="tariffId" name="tariffId" required><br><br>
+
+
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    document.getElementById('subscriberForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = {
+            subscName: document.getElementById('subscName').value,
+            subscSurname: document.getElementById('subscSurname').value,
+            msisdn: document.getElementById('msisdn').value,
+            tariffId: document.getElementById('tariffId').value
+        };
+
+        fetch('http://localhost:8080/subscribers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>
